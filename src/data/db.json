@@ -1,0 +1,34 @@
+{
+  "notes": [
+    {
+      "title": "Yoshi's birthday bash",
+      "desc": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      "category": "reminders",
+      "id": 1
+    },
+    {
+      "title": "Complete my ninja training",
+      "desc": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took.",
+      "category": "work",
+      "id": 2
+    },
+    {
+      "title": "testing add this note",
+      "desc": "a new note add to the list \nto the json server, which is a great way of setting up a mock REST Api\nfor testing etc",
+      "category": "todo",
+      "id": 4
+    },
+    {
+      "title": "learned making https requests",
+      "desc": "made POST and DELETE requests\nfor creating and deleting notes from the json server\nused the fetch keyword and also used async and await\n",
+      "category": "work",
+      "id": 6
+    },
+    {
+      "title": "done",
+      "desc": "finally done with this app\nlearned Material ui and a lot of new things\nI still get confused with some implementations of javascript\nIts a long way to go\none thing for sure there are a lot ready made things in front end, I should explore them and use them\nwill save my time and energy",
+      "category": "money",
+      "id": 7
+    }
+  ]
+}
