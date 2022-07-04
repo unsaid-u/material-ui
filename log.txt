@@ -23,3 +23,15 @@ learning material ui
 * useHistory hook for redirecting etc
 * avatars
 * react-masonry-css 
+
+todos _ _
+ 	add new router code
+	edit task functionality - PUT request
+	add authentication and database - firebase
+	deploy
+
+shifted app component to NewApp component
+
+this project contains new and old syntax of react router 
+like useHistory and useNavigate etc			-- changed it to new syntax
+like Outlet and children

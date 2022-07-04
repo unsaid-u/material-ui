@@ -9,7 +9,9 @@ import Radio from '@material-ui/core/Radio'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormLabel from '@material-ui/core/FormLabel'
 import FormControl from '@material-ui/core/FormControl'
-import { useHistory } from 'react-router-dom'
+import { Navigate, useHistory, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 
 // creating custom CSS 
 const useStyles = makeStyles({
@@ -32,9 +34,14 @@ const useStyles = makeStyles({
 	}
 })
 
-export default function Create() {
-	const history = useHistory()
+// NoteList.find(id) -- if found i will update form state
 
+export default function Create({edit}) {
+	let id = ""
+	
+	
+//	const history = useHistory()
+	const navigate = useNavigate()
 	const classes = useStyles()
 	const [title , setTitle] = useState("")
 	const [desc, setDesc] = useState("")
@@ -42,6 +49,20 @@ export default function Create() {
 	const [titleError , setTitleError] = useState(false)
 	const [descError, setDescError] = useState(false)
 	// could have made objects for these states
+	const {noteId} = useParams()
+	
+
+	useEffect(() => {
+		if(edit){
+			fetch(`http://localhost:8000/notes/${noteId}`)
+			.then(res => res.json())
+			.then(data => {
+				setTitle(data.title)
+				setDesc(data.desc)
+				setCategory(data.category)
+			})
+		}
+	}, [])
 
 	function handleSubmit(event){
 		event.preventDefault()
@@ -55,17 +76,27 @@ export default function Create() {
 			setDescError(true)
 
 		if(title && desc){
-			//console.log(title ,desc, category)
-			// we will add this new note to our json server
-			
-			fetch("http://localhost:8000/notes", {		// making a POST request to the server
-				method : "POST",							
-				headers : {"Content-type" : "application/json"}	,
-				body : JSON.stringify({
-					title, desc, category			// it will automatically add a unique id
+			// if edit is true we will make a PUT request
+			if(edit){
+				fetch(`http://localhost:8000/notes/${noteId}`, {
+					method: 'PUT',
+    				headers: { 'Content-Type': 'application/json' },
+    				body: JSON.stringify({ title: title, desc : desc, category : category })
 				})
-			}).then(() => history.push('/'))		// redirect to homepage, done using react router (useHistory hook)
-			
+				.then(() => (navigate('/')))
+			}
+
+			// else we will add this new note to our json server
+			else{
+
+				fetch("http://localhost:8000/notes", {		// making a POST request to the server
+					method : "POST",							
+					headers : {"Content-type" : "application/json"}	,
+					body : JSON.stringify({
+						title, desc, category			// it will automatically add a unique id
+					})
+				}).then(() => navigate('/'))		// redirect to homepage, done using react router (useHistory hook)
+			}	
 			setTitle("")
 			setDesc("")
 		}

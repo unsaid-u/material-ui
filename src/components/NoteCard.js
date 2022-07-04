@@ -7,15 +7,10 @@ import { Avatar, IconButton, makeStyles, Typography } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { green, yellow } from '@material-ui/core/colors';
 import { blue, pink } from '@mui/material/colors';
+import EditIcon from '@mui/icons-material/Edit';
 
 const useStyles = makeStyles({
-	test: {
-		border : (note) =>{
-			if(note.category == "reminders")
-				return "1px solid red"
-		}
-	},
-
+	
 	avatar: {
 		backgroundColor : (note) => {
 			if(note.category == "work")
@@ -30,23 +25,30 @@ const useStyles = makeStyles({
 	}
 })
 
-export default function NoteCard({note, handleDelete}){
+export default function NoteCard({note, handleDelete, handleEdit}){
 	const classes = useStyles(note)
 	return(
 		
-			<Card elevation={1} className={classes.test}>
+			<Card elevation={1} >
 				<CardHeader
 					avatar = {
 						<Avatar className={classes.avatar} >{note.category[0].toUpperCase()}</Avatar>
 					}
 					action = {
+						<>
+						<IconButton onClick={() => handleEdit(note.id)}>
+							<EditIcon/>
+						</IconButton>
 						<IconButton onClick={() => handleDelete(note.id)}>
 							<DeleteIcon/>
 						</IconButton>
+
+						</>
 					}
 
 					title = {note.title}
 					subheader = {note.category}
+					
 				/>
 
 				<CardContent>
@@ -56,3 +58,4 @@ export default function NoteCard({note, handleDelete}){
 		
 	)
 }
+

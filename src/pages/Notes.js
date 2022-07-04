@@ -6,12 +6,10 @@ import NoteCard from '../components/NoteCard'
 import { makeStyles } from '@material-ui/core'
 import Masonry from 'react-masonry-css'
 import { breakpoints } from '@mui/system'
+import { useHistory, useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles({
-	page: {
-		backgroundColor : "#f9f9f9"
-	},
-
+	
 	grid: {
 		marginTop: "0.7rem"
 	}
@@ -21,6 +19,8 @@ export default function Notes() {
 
 	const [notes, setNotes] = useState([])
 	const classes = useStyles()
+	//const history = useHistory()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		fetch("http://localhost:8000/notes")
@@ -39,13 +39,19 @@ export default function Notes() {
 		setNotes(newNotes)
 	}
 
+	const handleEdit= (id) =>{
+		//console.log("edit")
+		//redirect to the create component with a note id
+		navigate(`/create/${id}`)
+	}	
+
 	const breaks = {
 		default : 3,
 		1100 : 2,
 		700 : 1
 	}
 	return (
-		<Container className={classes.page}>
+		<Container >
 			
 			<Masonry 
 				breakpointCols={breaks}
@@ -55,7 +61,7 @@ export default function Notes() {
 			{
 				notes.map(note => (
 					<div  key={note.id} xs ={12} sm={6} md ={4}> 
-						<NoteCard note = {note} handleDelete = {handleDelete}/>
+						<NoteCard note = {note} handleDelete = {handleDelete} handleEdit={handleEdit}/>
 					</div>
 				))
 			}
