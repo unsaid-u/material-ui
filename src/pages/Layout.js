@@ -9,7 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText';
 import SubjectOutlinedIcon from '@mui/icons-material/SubjectOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Outlet, useHistory, useLocation, useNavigate } from 'react-router-dom';
 
 const drawerWidth  = 240
 
@@ -44,8 +44,9 @@ const useStyles = makeStyles((theme) => {		// this theme object is the default t
 
 export default function Layout({children}){
 	const classes = useStyles()
-	const history = useHistory()
+	//const history = useHistory()
 	const location = useLocation()
+	const navigate = useNavigate()
 
 	const drawerItems = [
 		{
@@ -81,7 +82,7 @@ export default function Layout({children}){
 							<ListItem 
 								key={item.text} 
 								button
-								onClick = {() => (history.push(item.path))}
+								onClick = {() => (navigate(item.path))}
 								className= {location.pathname == item.path ? classes.active : null}
 							>
 								<ListItemIcon>{item.icon}</ListItemIcon>
@@ -94,7 +95,7 @@ export default function Layout({children}){
 			</Drawer>
 
 			<div className={classes.page} >
-				{children}
+				<Outlet/>
 			</div>
 			
 		</div>
